@@ -4,7 +4,7 @@
 #include <stdbigos/trap.h>
 #include <stdbigos/types.h>
 #include <drivers/uart.h>
-
+#include <drivers/console.h>
 
 extern u8 bss_start;
 extern u8 bss_end;
@@ -16,14 +16,17 @@ static volatile u64* mtimecmp = (u64*)(clint_base + 0x4000);
 
 static const u64 quant = 50000llu;
 
+extern char console_buffer[];
+
 void main() {
-  puts_uart("Hemlo im uart UwU");
+  while (true) {
+    uprintf("> ");
+    int read = readline();
+    process_command(console_buffer, read);
+    uprintf("\n");
+  }
 }
 
-static char* uart_output_handler(const char* buf, void* user, int len) {
-  while(len--) putc_uart(*buf++);
-  return (char*)user;
-}
 
 
 [[gnu::interrupt("machine")]]
@@ -35,10 +38,10 @@ void int_handler() {
 
 		switch(int_no) {
 		case IntMTimer:
-			puts_uart("\n\tgot timer interrupt\n");
+			uprintf("\n\tgot timer interrupt\n");
 			mtimecmp[hartid()] = *mtime + quant;
 			break;
-		default: dprintf(uart_output_handler, "\n\tunknown interrupt (%ld)\n", int_no); break;
+		default: uprintf("\n\tunknown interrupt (%ld)\n", int_no); break;
 		}
 
 		CSR_CLEAR(mip, (reg_t)1 << int_no);

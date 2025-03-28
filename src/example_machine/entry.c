@@ -3,6 +3,8 @@
 #include <stdbigos/string.h>
 #include <stdbigos/trap.h>
 #include <stdbigos/types.h>
+#include <drivers/uart.h>
+
 
 extern u8 bss_start;
 extern u8 bss_end;
@@ -15,8 +17,14 @@ static volatile u64* mtimecmp = (u64*)(clint_base + 0x4000);
 static const u64 quant = 50000llu;
 
 void main() {
-	for(u32 i = 0;; ++i) dprintf("hello OS %u\n", i);
+  puts_uart("Hemlo im uart UwU");
 }
+
+static char* uart_output_handler(const char* buf, void* user, int len) {
+  while(len--) putc_uart(*buf++);
+  return (char*)user;
+}
+
 
 [[gnu::interrupt("machine")]]
 void int_handler() {
@@ -27,10 +35,10 @@ void int_handler() {
 
 		switch(int_no) {
 		case IntMTimer:
-			dputs("\n\tgot timer interrupt\n");
+			puts_uart("\n\tgot timer interrupt\n");
 			mtimecmp[hartid()] = *mtime + quant;
 			break;
-		default: dprintf("\n\tunknown interrupt (%ld)\n", int_no); break;
+		default: dprintf(uart_output_handler, "\n\tunknown interrupt (%ld)\n", int_no); break;
 		}
 
 		CSR_CLEAR(mip, (reg_t)1 << int_no);
@@ -46,13 +54,14 @@ void start() {
 	CSR_WRITE(mtvec, int_handler);
 
 	// request a timer interrupt
-	mtimecmp[hartid()] = *mtime + quant;
+	///mtimecmp[hartid()] = *mtime + quant;
 
 	// set MIE in mstatus
-	CSR_SET(mstatus, 8);
+	//CSR_SET(mstatus, 8);
 
 	// set TIMER in mie
-	CSR_SET(mie, 1lu << IntMTimer);
+	//CSR_SET(mie, 1lu << IntMTimer);
+  init_uart();
 
 	main();
 

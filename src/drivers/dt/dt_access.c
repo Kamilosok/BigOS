@@ -1,11 +1,12 @@
 #include <debug/debug_stdio.h>
 #include <drivers/dt/dt.h>
-#include <drivers/dt/dt_node.h>
 #include <drivers/dt/dt_props.h>
 #include <stdbigos/bitutils.h>
+#include <stdbigos/buffer.h>
 #include <stdbigos/string.h>
 
 #include "dt_alloc.h"
+#include "dt_node.h"
 #include "dt_parser.h"
 
 static dt_node_t* find_child_by_name_s(dt_node_t* parent, const char* name) {
@@ -75,7 +76,7 @@ dt_node_t* dt_get_next_child(const dt_node_t* node) {
 	return node->next_sibling;
 }
 
-dt_prop_t* dt_find_prop(const dt_node_t* node, const char* name) {
+static dt_prop_t* dt_find_prop(const dt_node_t* node, const char* name) {
 	if (!node || !name)
 		return nullptr;
 
@@ -88,23 +89,14 @@ dt_prop_t* dt_find_prop(const dt_node_t* node, const char* name) {
 	return nullptr;
 }
 
-buffer_t dt_prop_get_buffer(const dt_node_t* node, const char* name) {
-	buffer_t buffer = make_buffer_err(nullptr, 0, BUF_ERR_FETCH);
-
+cbuffer_t dt_prop_get(const dt_node_t* node, const char* name) {
 	dt_prop_t* prop = dt_find_prop(node, name);
-	if (!prop || !prop->value)
-		return buffer;
+	if (!prop)
+		return make_cbuffer(nullptr, 0); // invalid buffer
 
-	buffer.data = prop->value;
-	buffer.size = prop->data_length;
-	buffer.error = BUF_ERR_OK;
-
-	return buffer;
+	return prop->data;
 }
 
-#ifndef NDEBUG
-
-// Use only in debug preset
 void dt_print_props(const dt_node_t* node, [[maybe_unused]] u8 depth) {
 	dt_prop_t* next = node->props;
 	while (next) {
@@ -114,7 +106,6 @@ void dt_print_props(const dt_node_t* node, [[maybe_unused]] u8 depth) {
 	}
 }
 
-// Use only in debug preset
 void dt_print_tree(const dt_node_t* node, [[maybe_unused]] u8 depth) {
 	dputgap(depth);
 	dprintf("NODE: %s\n", node->name);
@@ -129,7 +120,3 @@ void dt_print_tree(const dt_node_t* node, [[maybe_unused]] u8 depth) {
 		next = next->next_sibling;
 	}
 }
-#else
-void dt_print_props(const dt_node_t* node, [[maybe_unused]] u8 depth);
-void dt_print_tree(const dt_node_t* node, [[maybe_unused]] u8 depth);
-#endif

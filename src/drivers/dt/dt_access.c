@@ -1,6 +1,7 @@
 #include <debug/debug_stdio.h>
 #include <drivers/dt/dt.h>
 #include <drivers/dt/dt_node.h>
+#include <drivers/dt/dt_props.h>
 #include <stdbigos/bitutils.h>
 #include <stdbigos/string.h>
 
@@ -87,30 +88,18 @@ dt_prop_t* dt_find_prop(const dt_node_t* node, const char* name) {
 	return nullptr;
 }
 
-int dt_prop_read_u32(const dt_node_t* node, const char* name, u32* out) {
+buffer_t dt_prop_get_buffer(const dt_node_t* node, const char* name) {
+	buffer_t buffer = make_buffer_err(nullptr, 0, BUFFER_FETCH_ERROR);
+
 	dt_prop_t* prop = dt_find_prop(node, name);
+	if (!prop || !prop->value)
+		return buffer;
 
-	if (!prop || prop->data_length < 4 || !prop->value)
-		return -1;
+	buffer.data = prop->value;
+	buffer.size = prop->data_length;
+	buffer.error = BUFFER_OK;
 
-	u32 val = read_be32(prop->value);
-
-	*out = val;
-
-	return 0;
-}
-
-int dt_prop_read_u64(const dt_node_t* node, const char* name, u64* out) {
-	dt_prop_t* prop = dt_find_prop(node, name);
-
-	if (!prop || prop->data_length < 8 || !prop->value)
-		return -1;
-
-	u64 val = read_be64(prop->value);
-
-	*out = val;
-
-	return 0;
+	return buffer;
 }
 
 void dt_print_props(const dt_node_t* node, u8 depth) {

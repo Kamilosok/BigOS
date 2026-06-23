@@ -396,3 +396,43 @@ error_t dt_get_rsv_mem_entry(const fdt_t* fdt, u32 index, fdt_rsv_entry* entryOU
 
 	return ERR_NOT_VALID;
 }
+
+error_t dt_get_reg_cell_counts(const fdt_t* fdt, dt_node_t node, u32* address_cellsOUT, u32* size_cellsOUT) {
+	*address_cellsOUT = 2;
+	*size_cellsOUT = 1;
+
+	dt_prop_t address_cells_prop;
+	error_t err = dt_get_prop_by_name(fdt, node, "#address-cells", &address_cells_prop);
+	if (err != ERR_NONE && err != ERR_NOT_FOUND) {
+		return err;
+	}
+	if (err == ERR_NONE) {
+		buffer_t buf;
+		err = dt_get_prop_buffer(fdt, address_cells_prop, &buf);
+		if (err)
+			return err;
+
+		if (!buffer_read_u32_be(buf, 0, address_cellsOUT) || *address_cellsOUT == 0)
+			return ERR_NOT_VALID;
+	}
+
+	dt_prop_t size_cells_prop;
+	err = dt_get_prop_by_name(fdt, node, "#size-cells", &size_cells_prop);
+	if (err != ERR_NONE && err != ERR_NOT_FOUND) {
+		return err;
+	}
+	if (err == ERR_NONE) {
+		buffer_t buf;
+		err = dt_get_prop_buffer(fdt, size_cells_prop, &buf);
+		if (err)
+			return err;
+
+		if (!buffer_read_u32_be(buf, 0, size_cellsOUT) || *size_cellsOUT == 0)
+			return ERR_NOT_VALID;
+	}
+
+	if (*address_cellsOUT > 2 || *size_cellsOUT > 2)
+		return ERR_NOT_VALID;
+
+	return ERR_NONE;
+}

@@ -3,7 +3,7 @@
 #define _LINUX_ELF_H
 
 #include "elf-em.h"
-#include <libcore/types.h>
+#include <stdbigos/types.h>
 
 /* 32-bit ELF base types. */
 typedef u32	Elf32_Addr;
@@ -100,12 +100,6 @@ typedef i64	Elf64_Sxword;
 #define DT_DEBUG	21
 #define DT_TEXTREL	22
 #define DT_JMPREL	23
-#define DT_INIT_ARRAY	25
-#define DT_FINI_ARRAY	26
-#define DT_INIT_ARRAYSZ	27
-#define DT_FINI_ARRAYSZ	28
-#define DT_PREINIT_ARRAY	32
-#define DT_PREINIT_ARRAYSZ	33
 #define DT_ENCODING	32
 #define OLD_DT_LOOS	0x60000000
 #define DT_LOOS		0x6000000d

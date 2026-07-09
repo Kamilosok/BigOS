@@ -1,14 +1,13 @@
 #include "memory_management/include/physical_memory/manager.h"
 
-#include <libcore/address.h>
-#include <libcore/error.h>
-#include <libcore/memory_types.h>
-#include <libcore/string.h>
-#include <libcore/types.h>
 #include <logging/klog.h>
+#include <stdbigos/memory_types.h>
+#include <stdbigos/string.h>
 
 #include "allocator.h"
-#include "hal/include/memory_regions.h"
+#include "hal/memory_regions.h"
+#include "stdbigos/address.h"
+#include "stdbigos/error.h"
 
 // ==========================================
 //					Private
@@ -23,12 +22,12 @@ typedef struct {
 
 static __phys header_storage_node_t* g_root_header_storage_node = nullptr;
 
-static bool s_get_next_reserved_region(void* user, memory_area_t* areaOUT) {
+bool get_next_reserved_region(void* user, memory_area_t* areaOUT) {
 	hal_reserved_memory_iterator_t* iter = user;
 	return hal_get_next_reserved_region(iter, areaOUT) == ERR_NONE;
 }
 
-static error_t s_init_header_storage_node(physical_memory_region_t storage_region) {
+static error_t init_header_storage_node(physical_memory_region_t storage_region) {
 	header_storage_node_t* effective_hsn = physical_to_effective(g_root_header_storage_node);
 	effective_hsn->max_count = (storage_region.size - sizeof(header_storage_node_t)) / sizeof(physical_memory_region_t);
 	effective_hsn->count = 0;
@@ -39,7 +38,7 @@ static error_t s_init_header_storage_node(physical_memory_region_t storage_regio
 }
 
 [[gnu::nonnull]]
-static error_t s_get_header_pmr(u32 idx, physical_memory_region_t* headerOUT) {
+static error_t get_header_pmr(u32 idx, physical_memory_region_t* headerOUT) {
 	header_storage_node_t* effective_hsn = physical_to_effective(g_root_header_storage_node);
 	while (idx > (effective_hsn->count - 1)) {
 		idx -= effective_hsn->count;
@@ -51,17 +50,17 @@ static error_t s_get_header_pmr(u32 idx, physical_memory_region_t* headerOUT) {
 	return ERR_NONE;
 }
 
-static error_t s_store_header(physical_memory_region_t header) {
+static error_t store_header(physical_memory_region_t header) {
 	header_storage_node_t* effective_hsn = physical_to_effective(g_root_header_storage_node);
 	while (effective_hsn->count == effective_hsn->max_count) {
 		if (effective_hsn->next != nullptr) {
 			effective_hsn = physical_to_effective(effective_hsn->next);
 		} else {
 			physical_memory_region_t new_reg = {0};
-			error_t err = phys_mem_alloc_frame(FRAME_ORDER_4KiB, &new_reg);
+			error_t err = phys_mem_alloc_frame(FRAME_SIZE_4KiB, &new_reg);
 			if (err)
 				return err;
-			err = s_init_header_storage_node(new_reg);
+			err = init_header_storage_node(new_reg);
 			if (err)
 				return err;
 			KLOGLN_TRACE("New region for storage of physical region headers was added of size: %zu at addra: %p",
@@ -77,7 +76,7 @@ static error_t s_store_header(physical_memory_region_t header) {
 //					Public
 // ==========================================
 
-u64 phys_mem_get_frame_size_in_bytes(frame_order_t fs) {
+u64 phys_mem_get_frame_size_in_bytes(frame_size_t fs) {
 	const u64 size_4KiB = 0x1000;
 	return (size_4KiB << fs);
 }
@@ -109,7 +108,7 @@ error_t phys_mem_init() {
 			KLOGLN_ERROR("Failed to reset reserved memory regions iterator");
 			return ERR_NOT_VALID;
 		}
-		err = pmallocator_get_header(pmr_area, s_get_next_reserved_region, &iter, &header_area);
+		err = pmallocator_get_header(pmr_area, get_next_reserved_region, &iter, &header_area);
 		if (err) {
 			KLOGLN_WARNING("Failed to get header region of memory region [%p - %p]", pmr.addr, pmr.addr + pmr.size);
 			continue;
@@ -126,14 +125,14 @@ error_t phys_mem_init() {
 			KLOGLN_ERROR("Failed to reset reserved memory regions iterator");
 			return ERR_NOT_VALID;
 		}
-		err = pmallocator_init_region(pmr_area, header_eff_reg, s_get_next_reserved_region, &iter);
+		err = pmallocator_init_region(pmr_area, header_eff_reg, get_next_reserved_region, &iter);
 		if (err) {
 			KLOGLN_WARNING("Failed to init header region of memory region [%p - %p]", pmr.addr, pmr.addr + pmr.size);
 			continue;
 		}
 		if (g_root_header_storage_node == nullptr) {
 			memory_area_t new_area = {0};
-			err = pmallocator_allocate(FRAME_ORDER_4KiB, header_eff_reg, &new_area);
+			err = pmallocator_allocate(12, header_eff_reg, &new_area);
 			// NOTE: Since we failed to allocate the smallest possible frame size, we assume that this region is
 			// useless.
 			if (err) {
@@ -150,7 +149,7 @@ error_t phys_mem_init() {
 			    .addr = (__phys void*)new_area.addr,
 			    .size = new_area.size,
 			};
-			err = s_init_header_storage_node(new_reg);
+			err = init_header_storage_node(new_reg);
 			if (err) {
 				// No need to free this region since this error is, and should be, fatal
 				KLOG_ERROR("4KiB was not enough to store any header regions. A single header region should be nowhere "
@@ -161,7 +160,7 @@ error_t phys_mem_init() {
 			g_root_header_storage_node = new_reg.addr;
 		}
 
-		err = s_store_header(header_pmr);
+		err = store_header(header_pmr);
 		if (err)
 			KLOG_DO_RETURN(ERR_OUT_OF_BOUNDS, KLRF_TRACE_ERR | KLRF_END_BLOCK);
 	}
@@ -170,13 +169,13 @@ error_t phys_mem_init() {
 }
 // NOLINTEND readability-function-cognitive-complexity
 
-error_t phys_mem_alloc_frame(frame_order_t frame_size, physical_memory_region_t* regOUT) {
+error_t phys_mem_alloc_frame(frame_size_t frame_size, physical_memory_region_t* regOUT) {
 	u32 idx = 0;
 	physical_memory_region_t header_pmr;
-	while (s_get_header_pmr(idx, &header_pmr) == ERR_NONE) {
+	while (get_header_pmr(idx, &header_pmr) == ERR_NONE) {
 		memory_region_t header_region = physical_memory_region_to_effective(header_pmr);
 		memory_area_t area_out;
-		error_t err = pmallocator_allocate(frame_size, header_region, &area_out);
+		error_t err = pmallocator_allocate(frame_size + 12, header_region, &area_out);
 		if (err) {
 			++idx;
 			continue;
@@ -197,7 +196,7 @@ error_t phys_mem_alloc_frame(frame_order_t frame_size, physical_memory_region_t*
 error_t phys_mem_free_frame(physical_memory_region_t reg) {
 	u32 idx = 0;
 	physical_memory_region_t header_pmr;
-	while (s_get_header_pmr(idx, &header_pmr) == ERR_NONE) {
+	while (get_header_pmr(idx, &header_pmr) == ERR_NONE) {
 		memory_region_t header_region = physical_memory_region_to_effective(header_pmr);
 		memory_area_t area = physical_memory_region_to_area(reg);
 		error_t err = pmallocator_free(area, header_region);

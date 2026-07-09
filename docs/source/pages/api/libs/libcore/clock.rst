@@ -1,5 +1,0 @@
-=====
-Clock
-=====
-
-.. doxygengroup:: clock

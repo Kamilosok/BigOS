@@ -1,5 +1,0 @@
-======
-Buffer
-======
-
-.. doxygengroup:: buffer

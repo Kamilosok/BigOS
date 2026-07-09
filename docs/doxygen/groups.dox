@@ -5,14 +5,12 @@
 		@defgroup palloc Physical memory allocator
 	@defgroup kinit Kernel initialization
 	@defgroup hal Hardware abstraction layer
-		@defgroup hal_riscv_mem RISC-V memory regions
-@defgroup libboot_dt
-@defgroup libcore
+@defgroup dt Device tree
+@defgroup stdbigos
 	@defgroup sbi
-	@defgroup error
+	@defgroup csr
+	@defgroup trap
 	@defgroup types
 	@defgroup string
 	@defgroup bitutils
-	@defgroup stdversion
-@defgroup trap Interrupt and exception handling
 */

@@ -1,5 +1,0 @@
-=====
-Error
-=====
-
-.. doxygengroup:: error

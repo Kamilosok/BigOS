@@ -58,15 +58,11 @@ dkms.conf
 
 # Build
 build/
-build-tests/
 .cache/
 
 # Disk images
 *.img
 *.iso
-# Keep .img files in tests/
-!tests/
-!tests/**/*.img
 
 # Compiler commands
 compile_commands.json

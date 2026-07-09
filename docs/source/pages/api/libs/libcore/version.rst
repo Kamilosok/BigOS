@@ -1,5 +1,0 @@
-=======
-Version
-=======
-
-.. doxygengroup:: stdversion

@@ -1,7 +1,7 @@
 #ifndef BIGOS_KERNEL_LOGGING_KLOG
 #define BIGOS_KERNEL_LOGGING_KLOG
 
-#include <libcore/types.h>
+#include <stdbigos/types.h>
 
 typedef enum {
 	KLSL_ERROR = 0,

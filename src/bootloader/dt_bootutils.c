@@ -6,8 +6,8 @@
  ******************************************************************************/
 
 // HACK
-#include <../src/lib/dt/dt_common.h>
-#include <../src/lib/dt/dt_defines.h>
+#include <../src/libboot/dt/dt_common.h>
+#include <../src/libboot/dt/dt_defines.h>
 #include <efi.h>
 #include <efierr.h>
 #include <efilib.h>
@@ -46,25 +46,28 @@ status_t get_FDT(void) {
 
 	RETURN(BOOT_ERROR);
 }
-
+// FIXME: Idk g_bs wasn't defined, it's broken as of now
 status_t expand_fdt_for_writing(void) {
+	/*
 	if (!g_fdt)
-		return BOOT_ERROR;
+	    return BOOT_ERROR;
 
 	u32 old_total_size = read_be32((u8*)g_fdt + FDT_OFF_TOTAL_SIZE);
 	u32 new_total_size = old_total_size + FDT_EXTRA_SPACE;
 
 	void* new_fdt = NULL;
-	// ?????
-	EFI_STATUS status = 0; // g_bs->AllocatePool(EfiLoaderData, new_total_size, &new_fdt);
+
+
+	EFI_STATUS status = g_bs->AllocatePool(EfiLoaderData, new_total_size, &new_fdt);
 	if (EFI_ERROR(status)) {
-		return BOOT_ERROR;
+	    return BOOT_ERROR;
 	}
 
 	memcpy(new_fdt, g_fdt, old_total_size);
 	write_be32((u8*)new_fdt + FDT_OFF_TOTAL_SIZE, new_total_size);
 
 	g_fdt = new_fdt;
+	*/
 	return BOOT_SUCCESS;
 }
 

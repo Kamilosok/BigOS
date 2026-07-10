@@ -26,7 +26,9 @@ add_custom_command(
     COMMAND ${CMAKE_OBJCOPY}
                 -j .text -j .sdata -j .data -j .rodata
                 -j .dynamic -j .dynsym  -j .rel -j .rela -j .rel.*
-                -j .rela.* -j .reloc --target efi-app-riscv64 --subsystem=10
+                -j .rela.* -j .reloc
+                --target efi-app-riscv64
+                --subsystem efi-app
                 "$<TARGET_FILE:bootloader>"
                 "${BOOTLOADER_EFI_LOCATION}"
     VERBATIM
@@ -69,3 +71,6 @@ add_custom_target(run-bootloader
     VERBATIM
     USES_TERMINAL
 )
+
+# No LTO
+set_target_properties(bootloader PROPERTIES INTERPROCEDURAL_OPTIMIZATION FALSE)

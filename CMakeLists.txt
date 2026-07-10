@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 3.29)
 project(BigOS LANGUAGES C ASM)
 
 set_property(GLOBAL PROPERTY USE_FOLDERS ON)
-add_subdirectory(external/efi)
 
 include_directories(SYSTEM external/include)
 include_directories(include)
@@ -19,4 +18,5 @@ if(BIGOS_BUILD_TESTS)
 else()
 	include(CMake/Linters.cmake)
 	add_subdirectory(src)
+	add_subdirectory(external/efi)
 endif()

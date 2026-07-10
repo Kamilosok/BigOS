@@ -9,6 +9,7 @@
  *
  ******************************************************************************/
 
+#include <dt/dt.h>
 #include <efi.h>
 #include <efiapi.h>
 #include <efidef.h>
@@ -21,7 +22,6 @@
 #include "error.h"
 #include "exit.h"
 #include "ext2.h"
-#include "fdt.h"
 #include "kernel.h"
 #include "loader.h"
 #include "log.h"

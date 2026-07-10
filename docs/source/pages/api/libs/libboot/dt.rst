@@ -6,7 +6,7 @@ Device Tree API
 Public API
 ----------
 
-.. doxygengroup:: dt
+.. doxygengroup:: libboot_dt
    :members:
 
 ---------

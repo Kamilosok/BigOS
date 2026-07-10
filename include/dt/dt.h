@@ -234,7 +234,16 @@ error_t dt_get_prop_buffer(const fdt_t* fdt, dt_prop_t prop, buffer_t* bufOUT);
  * @retval ERR_OUT_OF_BOUNDS if index is out of bounds or the Memory Reservation Block is malformed
  */
 [[gnu::nonnull(3)]]
+
 error_t dt_get_rsv_mem_entry(const fdt_t* fdt, u32 index, fdt_rsv_entry* entryOUT);
+
+// HACK
+#include <../src/bootloader/error.h>
+
+/**
+ * @brief	Read FDT from EFI system table and store it in g_fdt
+ */
+[[nodiscard]] status_t get_FDT(void);
 
 /// @}
 

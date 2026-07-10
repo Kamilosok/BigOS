@@ -18,6 +18,13 @@
             "toolchainFile": "${sourceDir}/CMake/toolchains/riscv64-clang.cmake"
         },
         {
+            "name": "host-clang",
+            "hidden": true,
+			"cacheVariables": {
+				"CMAKE_C_COMPILER": "clang"
+			}
+        },
+        {
             "name": "compile-commands",
             "hidden": true,
             "cacheVariables": {
@@ -103,6 +110,14 @@
                 "type": "notEquals",
                 "lhs": "${hostSystemName}",
                 "rhs": "Darwin"
+            }
+        },
+        {
+            "name": "native-host-tests",
+            "hidden": true,
+            "binaryDir": "${sourceDir}/build-tests",
+            "cacheVariables": {
+                "BIGOS_BUILD_TESTS": "ON"
             }
         }
     ]

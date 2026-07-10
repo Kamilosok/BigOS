@@ -4,6 +4,7 @@ Bigos Libraries
 
 .. toctree::
    :maxdepth: 1
+   :glob:
 
-   dt
-   stdbigos/index
+   libcore/index
+   libboot/index

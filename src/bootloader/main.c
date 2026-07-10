@@ -9,12 +9,12 @@
  *
  ******************************************************************************/
 
-#include <dt/dt.h>
 #include <efi.h>
 #include <efiapi.h>
 #include <efidef.h>
 #include <efidevp.h>
 #include <efilib.h>
+#include <libboot/dt/dt.h>
 
 #include "common.h"
 #include "config.h"

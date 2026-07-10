@@ -2,9 +2,7 @@
 #ifndef _LINUX_ELF_H
 #define _LINUX_ELF_H
 
-// TODO: CMAKE so libcore works
-// #include <libcore/types.h>
-#include <stdbigos/types.h>
+#include <libcore/types.h>
 
 #include "elf-em.h"
 

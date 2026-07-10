@@ -1,5 +1,5 @@
-#ifndef STDBIGOS_CSR
-#define STDBIGOS_CSR
+#ifndef LIBCORE_CSR
+#define LIBCORE_CSR
 
 #include "types.h"
 

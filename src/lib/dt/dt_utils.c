@@ -1,7 +1,7 @@
-#include <dt/dt.h>
-#include <stdbigos/bitutils.h>
-#include <stdbigos/buffer.h>
-#include <stdbigos/types.h>
+#include <libboot/dt/dt.h>
+#include <libcore/bitutils.h>
+#include <libcore/buffer.h>
+#include <libcore/types.h>
 
 #include "dt_defines.h"
 

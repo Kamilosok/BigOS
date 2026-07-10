@@ -7,9 +7,9 @@
 #ifndef SRC_LIB_DT_COMMON
 #define SRC_LIB_DT_COMMON
 
-#include <dt/dt.h>
-#include <stdbigos/error.h>
-#include <stdbigos/types.h>
+#include <libboot/dt/dt.h>
+#include <libcore/error.h>
+#include <libcore/types.h>
 
 // Offsets are of type u32
 

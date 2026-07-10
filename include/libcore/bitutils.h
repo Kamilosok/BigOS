@@ -1,9 +1,9 @@
-#ifndef STDBIGOS_BITUTILS
-#define STDBIGOS_BITUTILS
+#ifndef LIBCORE_BITUTILS
+#define LIBCORE_BITUTILS
 
-#include <stdbigos/types.h>
+#include <libcore/types.h>
 
-/// @addtogroup stdbigos
+/// @addtogroup libcore
 /// @{
 /// @addtogroup bitutils
 /// @{
@@ -23,4 +23,4 @@ u32 align_u32(u32 num, u32 align);
 /// @}
 /// @}
 
-#endif // !STDBIGOS_BITUTILS
+#endif // !LIBCORE_BITUTILS

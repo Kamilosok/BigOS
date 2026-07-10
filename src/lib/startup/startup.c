@@ -6,10 +6,10 @@
 
 */
 
-#include <relocations/reloc.h>
-#include <stdbigos/csr.h>
-#include <stdbigos/string.h>
-#include <stdbigos/types.h>
+#include <debug/reloc.h>
+#include <libcore/csr.h>
+#include <libcore/string.h>
+#include <libcore/types.h>
 #include <stdint.h>
 
 // Generic C function pointer.

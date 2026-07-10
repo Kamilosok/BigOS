@@ -1,6 +1,6 @@
+#include <debug/reloc.h>
 #include <elf.h>
-#include <relocations/reloc.h>
-#include <stdbigos/types.h>
+#include <libcore/types.h>
 #include <stdint.h>
 
 #define R_RISCV_NONE     0

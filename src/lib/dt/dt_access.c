@@ -1,9 +1,9 @@
 #include <debug/debug_stdio.h>
-#include <dt/dt.h>
-#include <stdbigos/bitutils.h>
-#include <stdbigos/buffer.h>
-#include <stdbigos/string.h>
-#include <stdbigos/types.h>
+#include <libboot/dt/dt.h>
+#include <libcore/bitutils.h>
+#include <libcore/buffer.h>
+#include <libcore/string.h>
+#include <libcore/types.h>
 #include <stddef.h>
 
 #include "dt_common.h"

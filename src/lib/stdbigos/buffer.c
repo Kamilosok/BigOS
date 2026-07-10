@@ -1,8 +1,8 @@
-#include <stdbigos/bitutils.h>
-#include <stdbigos/buffer.h>
-#include <stdbigos/math.h>
-#include <stdbigos/string.h>
-#include <stdbigos/types.h>
+#include <libcore/bitutils.h>
+#include <libcore/buffer.h>
+#include <libcore/math.h>
+#include <libcore/string.h>
+#include <libcore/types.h>
 #include <stddef.h>
 
 bool buffer_read_u32_be(buffer_t buf, size_t offset, u32* out) {

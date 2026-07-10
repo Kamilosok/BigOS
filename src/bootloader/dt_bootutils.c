@@ -8,12 +8,12 @@
 // HACK
 #include <../src/lib/dt/dt_common.h>
 #include <../src/lib/dt/dt_defines.h>
-#include <dt/dt.h>
 #include <efi.h>
 #include <efierr.h>
 #include <efilib.h>
-#include <stdbigos/bitutils.h>
-#include <stdbigos/string.h>
+#include <libboot/dt/dt.h>
+#include <libcore/bitutils.h>
+#include <libcore/string.h>
 
 #include "common.h"
 #include "error.h"

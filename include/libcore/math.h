@@ -1,5 +1,5 @@
-#ifndef STDBIGOS_MATH
-#define STDBIGOS_MATH
+#ifndef LIBCORE_MATH
+#define LIBCORE_MATH
 
 #define ALIGN_DOWN(x, align) ((x) & ~((align) - 1))
 #define ALIGN_UP(x, align)   (ALIGN_DOWN((x) + (align) - 1, (align)))
@@ -9,4 +9,4 @@
 #define MIN(a, b) ((a) < (b) ? (a) : (b))
 #define MAX(a, b) ((a) > (b) ? (a) : (b))
 
-#endif // !STDBIGOS_MATH
+#endif // !LIBCORE_MATH

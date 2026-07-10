@@ -1,12 +1,12 @@
-#ifndef STDBIGOS_STRING
-#define STDBIGOS_STRING
+#ifndef LIBCORE_STRING
+#define LIBCORE_STRING
 
 #include <stddef.h>
 
 #pragma GCC diagnostic push
 #pragma GCC diagnostic ignored "-Wattributes"
 
-/// @addtogroup stdbigos
+/// @addtogroup libcore
 /// @{
 /// @addtogroup string
 /// @{
@@ -79,4 +79,4 @@ char* strstr(const char* str, const char* substr);
 
 #pragma GCC diagnostic pop
 
-#endif // !STDBIGOS_STRING
+#endif // !LIBCORE_STRING

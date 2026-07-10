@@ -1,5 +1,5 @@
-#ifndef STDBIGOS_ADDRESS
-#define STDBIGOS_ADDRESS
+#ifndef LIBCORE_ADDRESS
+#define LIBCORE_ADDRESS
 
 #ifdef __clang__
 	#define __noderef __attribute__((noderef))
@@ -13,4 +13,4 @@
 	#define __iomem
 #endif
 
-#endif // !STDBIGOS_ADDRESS
+#endif // !LIBCORE_ADDRESS

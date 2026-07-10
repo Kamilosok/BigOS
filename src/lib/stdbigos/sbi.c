@@ -1,5 +1,5 @@
-#include <stdbigos/sbi.h>
-#include <stdbigos/types.h>
+#include <libcore/sbi.h>
+#include <libcore/types.h>
 
 enum {
 	SBI_FID_BASE_GET_SPEC_VERSION = 0,

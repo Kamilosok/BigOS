@@ -1,7 +1,7 @@
 #include <debug/debug_stdio.h>
-#include <dt/dt.h>
-#include <stdbigos/buffer.h>
-#include <stdbigos/types.h>
+#include <libboot/dt/dt.h>
+#include <libcore/buffer.h>
+#include <libcore/types.h>
 
 void main([[maybe_unused]] u32 hartid, const void* fdt) {
 	fdt_t fdt_obj;

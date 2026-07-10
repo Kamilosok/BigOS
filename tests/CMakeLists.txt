@@ -1,0 +1,16 @@
+include(FetchContent)
+
+FetchContent_Declare(
+        unity
+        GIT_REPOSITORY https://github.com/ThrowTheSwitch/Unity.git
+        GIT_TAG v2.6.1
+        GIT_SHALLOW TRUE
+)
+FetchContent_MakeAvailable(unity)
+
+file(GLOB CHILDREN RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} *)
+foreach(CHILD ${CHILDREN})
+  if(IS_DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/${CHILD})
+    add_subdirectory(${CHILD})
+  endif()
+endforeach()

@@ -1,10 +1,10 @@
-#ifndef STDBIGOS_BUFFER
-#define STDBIGOS_BUFFER
+#ifndef LIBCORE_BUFFER
+#define LIBCORE_BUFFER
 
-#include <stdbigos/array_sizes.h>
-#include <stdbigos/types.h>
+#include <libcore/array_sizes.h>
+#include <libcore/types.h>
 
-/// @addtogroup stdbigos
+/// @addtogroup libcore
 /// @{
 /// @addtogroup buffer
 /// @{
@@ -60,4 +60,4 @@ bool buffer_equal(buffer_t lhs, buffer_t rhs);
 /// @}
 /// @}
 
-#endif // !STDBIGOS_BUFFER
+#endif // !LIBCORE_BUFFER

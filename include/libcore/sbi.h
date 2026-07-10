@@ -1,9 +1,9 @@
-#ifndef _STDBIGOS_SBI_H_
-#define _STDBIGOS_SBI_H_
+#ifndef LIBCORE_SBI
+#define LIBCORE_SBI
 
-#include "types.h"
+#include <libcore/types.h>
 
-/// @addtogroup stdbigos
+/// @addtogroup libcore
 /// @{
 /// @addtogroup sbi
 /// @{

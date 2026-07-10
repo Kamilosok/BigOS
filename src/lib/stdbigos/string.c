@@ -1,5 +1,5 @@
-#include <stdbigos/string.h>
-#include <stdbigos/types.h>
+#include <libcore/string.h>
+#include <libcore/types.h>
 #include <stddef.h>
 
 void* memcpy(void* restrict dest, const void* restrict src, size_t n) {

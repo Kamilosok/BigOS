@@ -1,12 +1,12 @@
-#ifndef STDBIGOS_MEMORY_TYPES
-#define STDBIGOS_MEMORY_TYPES
+#ifndef LIBCORE_MEMORY_TYPES
+#define LIBCORE_MEMORY_TYPES
 
-#include <stdbigos/address.h>
-#include <stdbigos/array_sizes.h>
-#include <stdbigos/math.h>
-#include <stdbigos/types.h>
+#include <libcore/address.h>
+#include <libcore/array_sizes.h>
+#include <libcore/math.h>
+#include <libcore/types.h>
 
-/// @addtogroup stdbigos
+/// @addtogroup libcore
 /// @{
 /// @addtogroup types
 /// @{
@@ -109,4 +109,4 @@ static inline physical_memory_region_t physical_memory_region_shrink_to_alignmen
 /// @}
 /// @}
 
-#endif // !STDBIGOS_MEMORY_TYPES
+#endif // !LIBCORE_MEMORY_TYPES

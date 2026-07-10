@@ -1,10 +1,10 @@
-#ifndef STDBIGOS_TYPES
-#define STDBIGOS_TYPES
+#ifndef LIBCORE_TYPES
+#define LIBCORE_TYPES
 
 #include <stddef.h>
 #include <stdint.h>
 
-/// @addtogroup stdbigos
+/// @addtogroup libcore
 /// @{
 /// @addtogroup types
 /// @{
@@ -28,7 +28,10 @@ typedef int64_t i64;
 typedef unsigned long reg_t;
 
 typedef signed long ireg_t;
+
+#ifdef __riscv
 static_assert(sizeof(reg_t) * 8 == __riscv_xlen);
+#endif
 
 typedef enum {
 	ENDIAN_LITTLE = 0,
@@ -38,4 +41,4 @@ typedef enum {
 /// @}
 /// @}
 
-#endif // !STDBIGOS_TYPES
+#endif // !LIBCORE_TYPES

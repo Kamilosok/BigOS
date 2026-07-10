@@ -1,6 +1,6 @@
 #include <debug/debug_stdio.h>
+#include <libcore/stdio.h>
 #include <stdarg.h>
-#include <stdbigos/stdio.h>
 
 static volatile unsigned char* g_uart = (volatile unsigned char*)0x10000000;
 

@@ -1,7 +1,10 @@
-#ifndef STDBIGOS_ERROR
-#define STDBIGOS_ERROR
+#ifndef LIBCORE_ERROR
+#define LIBCORE_ERROR
 
-/// @ingroup stdbigos error
+/// @addtogroup libcore
+/// @{
+/// @addtogroup error
+/// @{
 typedef enum [[nodiscard]] {
 	ERR_NONE = 0,
 	ERR_NOT_IMPLEMENTED,
@@ -19,4 +22,7 @@ typedef enum [[nodiscard]] {
 	ERR_ALLOCATION_FAILED,
 } error_t;
 
-#endif // !BIGOS_INCLUDE_STDBIGOS_ERROR
+/// @}
+/// @}
+
+#endif // !LIBCORE_ERROR

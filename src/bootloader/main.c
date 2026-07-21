@@ -14,10 +14,10 @@
 #include <efidef.h>
 #include <efidevp.h>
 #include <efilib.h>
-#include <libboot/dt/dt.h>
 
 #include "common.h"
 #include "config.h"
+#include "dt_bootutils.h"
 #include "elf/elf.h"
 #include "error.h"
 #include "exit.h"

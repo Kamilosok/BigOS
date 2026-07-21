@@ -249,14 +249,6 @@ error_t dt_get_rsv_mem_entry(const fdt_t* fdt, u32 index, fdt_rsv_entry* entryOU
 [[gnu::nonnull(3, 4)]]
 error_t dt_get_reg_cell_counts(const fdt_t* fdt, dt_node_t node, u32* address_cellsOUT, u32* size_cellsOUT);
 
-// HACK
-#include <../src/bootloader/error.h>
-
-/**
- * @brief	Read FDT from EFI system table and store it in g_fdt
- */
-[[nodiscard]] status_t get_FDT(void);
-
 /// @}
 
 #endif // !DT_DT

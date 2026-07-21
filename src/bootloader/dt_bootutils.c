@@ -5,6 +5,8 @@
  *
  ******************************************************************************/
 
+#include "dt_bootutils.h"
+
 // HACK
 #include <../src/libboot/dt/dt_common.h>
 #include <../src/libboot/dt/dt_defines.h>
